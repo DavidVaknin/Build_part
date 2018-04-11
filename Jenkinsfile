@@ -36,22 +36,12 @@ pipeline {
                 }
             }
         }
-        stage('post build')
-        {
-            steps 
-            {
-                post
-                {
-                    always 
-                        {
-                        junit '**/target/*.xml'
-                        }
-                    failure {
-                        mail to: david.vaknin@devalore.com, subject: 'The Pipeline failed :('
-                        }
-                }
-             }
-        }
+         post { 
+            always { 
+            echo 'I will always say Hello again!'
+            }
+       }
+
         //stage('CodeAnlaysis')
         //{
            // steps 
