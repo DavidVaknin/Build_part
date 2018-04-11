@@ -5,6 +5,13 @@ pipeline {
     parameters {
         text defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl'
     }   
+    parameters {
+        text defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part/build', description: '', name: 'CheckoutDirectory'
+    }
+    parameters {
+        text defaultValue: 'TAG1', description: '', name: 'BuildSlaveTag'
+    }
+
 
     stages  
      {
