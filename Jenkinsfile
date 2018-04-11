@@ -3,8 +3,9 @@ pipeline {
     agent any 
 
     parameters {
-      string( RepositoryUrl: 'git@github.com:DavidVaknin/Build_part.git', CheckoutDirectory: 'home/matt/Documents/DuduV/Build_part/Build_part', BuildSlaveTag: 'TAG1')
-     }
+       string defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl', trim: false, string defaultValue: 'home/matt/Documents/DuduV/Build_part/Build_part', description: '', name: 'CheckoutDirectory', trim: false, string defaultValue: 'TAG1', description: '', name: 'BuildSlaveTag', trim: false
+    }
+
     stages  
      {
         stage('Build')  
