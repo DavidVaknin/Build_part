@@ -1,13 +1,12 @@
-parameters 
-     {
+
+pipeline { 
+    agent any 
+
+    parameters {
       string( RepositoryUrl: 'git@github.com:DavidVaknin/Build_part.git', 
             CheckoutDirectory: '/home/matt/Documents/DuduV/Build_part/Build_part', 
             BuildSlaveTag: 'TAG1')
      }
-pipeline
- { 
-     
-    agent any 
     stages
      {
         stage('Build')  
