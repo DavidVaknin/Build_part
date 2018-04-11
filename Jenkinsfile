@@ -10,7 +10,7 @@ pipeline {
      {
         stage('Build and Test') 
         {
-            properties([pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/15 * * * *')])])
+            
             steps
             {   
                 node(params.BuildSlaveTag)
