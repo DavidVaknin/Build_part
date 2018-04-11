@@ -1,42 +1,51 @@
-pipeline { 
+pipeline
+ { 
     agent any 
-    stages {
+    stages
+     {
         stage('Build')
-{
-    node(params.BuildSlaveTag)
-    {
-        // acquiering an extra workspace seems to be necessary to prevent interaction between
-        // the parallel run nodes, although node() should already create an own workspace.
-        ws(params.CheckoutDirectory)   
-        {   
-            // debug info
-            printJobParameter()
-        
-            // checkout sources
-            checkout([$class: 'GitSCM',
-                userRemoteConfigs: [[url: params.RepositoryUrl]],
-                branches: [[name: 'master']],
-                extensions: [[$class: 'CleanBeforeCheckout']]]
-            )
-       
-            // run cmake generate and build
-            cmakeBuild buildDir: 'build', installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
+        {
+            steps
+            {
+                node(params.BuildSlaveTag)
+                {
+                    // acquiering an extra workspace seems to be necessary to prevent interaction between
+                    // the parallel run nodes, although node() should already create an own workspace.
+                    ws(params.CheckoutDirectory)   
+                    {   
+                        // debug info
+                        printJobParameter()
+                    
+                        // checkout sources
+                        checkout([$class: 'GitSCM',
+                            userRemoteConfigs: [[url: params.RepositoryUrl]],
+                            branches: [[name: 'master']],
+                            extensions: [[$class: 'CleanBeforeCheckout']]]
+                        )
+                
+                        // run cmake generate and build
+                        cmakeBuild buildDir: 'build', installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
 
-            echo '----- CMake project was build successfully -----'
-        }
-    }
-}
-        stage('Test'){
-            steps {
-                sh 'make check'
-                junit 'reports/**/*.xml' 
+                        echo '----- CMake project was build successfully -----'
+                    }
+                }
             }
         }
-        stage('Deploy') {
-            steps {
-                sh 'make publish'
+        stage('Test')
+        {
+            steps 
+            {
+               // sh 'make check'
+               // junit 'reports/**/*.xml' 
             }
         }
+        stage('Deploy') 
+        {
+            steps 
+            {
+               // sh 'make publish'
+            }
+        }   
     }
 }
 def printJobParameter()
