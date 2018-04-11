@@ -40,7 +40,16 @@ pipeline {
         {
             steps 
             {
-            mail to: david.vaknin@devalore.com, subject: 'The Pipeline failed :('
+                post
+                {
+                    always 
+                        {
+                        junit '**/target/*.xml'
+                        }
+                    failure {
+                        mail to: david.vaknin@devalore.com, subject: 'The Pipeline failed :('
+                        }
+                }
              }
         }
         //stage('CodeAnlaysis')
