@@ -2,11 +2,10 @@
 pipeline { 
     agent any 
 
-    parameters {
+    parameters
+    {
         text defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl'
-        //text defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part/build', description: '', name: 'CheckoutDirectory',
-        //text defaultValue: 'TAG1', description: '', name: 'BuildSlaveTag'
-        }   
+    }   
     stages  
      {
         stage('Build')  
@@ -37,6 +36,14 @@ pipeline {
                 }
             }
         }
+        //stage('CodeAnlaysis')
+        //{
+           // steps 
+            //{
+               // sh 'make check'
+               // junit 'reports/**/*.xml' 
+           // }
+       // }
         //stage('Test')
         //{
            // steps 
