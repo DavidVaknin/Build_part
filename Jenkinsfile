@@ -13,8 +13,7 @@ pipeline {
         {
             steps
             {   
-                //node(params.BuildSlaveTag)
-                node('TAG1')
+                node(params.BuildSlaveTag)
                 {
                     // acquiering an extra workspace seems to be necessary to prevent interaction between
                     // the parallel run nodes, although node() should already create an own workspace.
