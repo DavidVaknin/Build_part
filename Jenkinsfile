@@ -1,5 +1,12 @@
+
 pipeline
  { 
+     parameters 
+     {
+      string( RepositoryUrl: 'git@github.com:DavidVaknin/Build_part.git', 
+            CheckoutDirectory: '/home/matt/Documents/DuduV/Build_part/Build_part', 
+            BuildSlaveTag: 'TAG1')
+     }
     agent any 
     stages
      {
@@ -48,31 +55,17 @@ pipeline
        // }
     }
 }
-// def printJobParameter()
-//{
-//    def introduction = """
-//----- Build CMake project -----
-//git@github.com:DavidVaknin/Build_part.git = ${params.RepositoryUrl}
-///home/matt/Documents/DuduV/Build_part/Build_part = ${params.CheckoutDirectory}
-//BuildSlaveONE1 = ${params.BuildSlaveTag}
-//-------------------------------
-//"""
-    
-//    echo introduction
-//}
 
- def printJobParameter()
+def printJobParameter()
 {
     def introduction = """
 ----- Build CMake project -----
-${params.RepositoryUrl} = git@github.com:DavidVaknin/Build_part.git 
-${params.CheckoutDirectory} = /home/matt/Documents/DuduV/Build_part/Build_part 
-${params.BuildSlaveTag} = BuildSlaveONE1 
+RepositoryUrl = ${params.RepositoryUrl}
+CheckoutDirectory = ${params.CheckoutDirectory}
+BuildSlaveTag = ${params.BuildSlaveTag}
 -------------------------------
 """
     
     echo introduction
 }
-${params.RepositoryUrl} = git@github.com:DavidVaknin/Build_part.git 
-${params.CheckoutDirectory} = /home/matt/Documents/DuduV/Build_part/Build_part 
-${params.BuildSlaveTag} = BuildSlaveONE1 
+
