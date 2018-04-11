@@ -31,21 +31,21 @@ pipeline
                 }
             }
         }
-        stage('Test')
-        {
-            steps 
-            {
+        //stage('Test')
+        //{
+           // steps 
+            //{
                // sh 'make check'
                // junit 'reports/**/*.xml' 
-            }
-        }
-        stage('Deploy') 
-        {
-            steps 
-            {
+           // }
+       // }
+       // stage('Deploy') 
+        //{
+           // steps 
+           // {
                // sh 'make publish'
-            }
-        }   
+          //  }
+       // }
     }
 }
 def printJobParameter()
