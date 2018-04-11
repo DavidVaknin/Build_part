@@ -4,8 +4,8 @@ pipeline {
 
     parameters {
         text defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl',
-        text defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part/build', description: '', name: 'CheckoutDirectory',
-        text defaultValue: 'TAG1', description: '', name: 'BuildSlaveTag'
+        //text defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part/build', description: '', name: 'CheckoutDirectory',
+        //text defaultValue: 'TAG1', description: '', name: 'BuildSlaveTag'
         }   
     stages  
      {
@@ -13,7 +13,8 @@ pipeline {
         {
             steps
             {   
-                node(params.BuildSlaveTag)
+                //node(params.BuildSlaveTag)
+                node('TAG1')
                 {
                     // acquiering an extra workspace seems to be necessary to prevent interaction between
                     // the parallel run nodes, although node() should already create an own workspace.
