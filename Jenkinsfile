@@ -73,3 +73,6 @@ ${params.BuildSlaveTag} = BuildSlaveONE1
     
     echo introduction
 }
+${params.RepositoryUrl} = git@github.com:DavidVaknin/Build_part.git 
+${params.CheckoutDirectory} = /home/matt/Documents/DuduV/Build_part/Build_part 
+${params.BuildSlaveTag} = BuildSlaveONE1 
