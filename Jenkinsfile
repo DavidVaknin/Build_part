@@ -82,3 +82,4 @@ BuildSlaveTag = ${params.BuildSlaveTag}
     echo introduction
 }
 
+def out = sh script: 'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libfoo/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu main/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu test/ 2> test/result.xml', returnStdout: true
