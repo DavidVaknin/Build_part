@@ -48,15 +48,26 @@ pipeline
        // }
     }
 }
-def printJobParameter()
+// def printJobParameter()
+//{
+//    def introduction = """
+//----- Build CMake project -----
+//git@github.com:DavidVaknin/Build_part.git = ${params.RepositoryUrl}
+///home/matt/Documents/DuduV/Build_part/Build_part = ${params.CheckoutDirectory}
+//BuildSlaveONE1 = ${params.BuildSlaveTag}
+//-------------------------------
+//"""
+    
+//    echo introduction
+//}
+
+ def printJobParameter()
 {
     def introduction = """
 ----- Build CMake project -----
-git@github.com:DavidVaknin/Build_part.git = ${params.RepositoryUrl}
-/home/matt/Documents/DuduV/Build_part/Build_part = ${params.CheckoutDirectory}
-BuildSlaveONE1 = ${params.BuildSlaveTag}
-AdditionalGenerateArguments = ${params.AdditionalGenerateArguments}
-AdditionalBuildArguments = ${params.AdditionalBuildArguments}
+${params.RepositoryUrl} = git@github.com:DavidVaknin/Build_part.git 
+${params.CheckoutDirectory} = /home/matt/Documents/DuduV/Build_part/Build_part 
+${params.BuildSlaveTag} = BuildSlaveONE1 
 -------------------------------
 """
     
