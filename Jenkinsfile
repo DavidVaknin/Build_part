@@ -37,7 +37,7 @@ pipeline {
             }
                 post { 
                     always { 
-                     echo 'I will always say Hello again!'
+                     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
                 }
         }
