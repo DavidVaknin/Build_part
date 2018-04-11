@@ -3,7 +3,7 @@ pipeline {
     agent any 
 
     parameters {
-        text defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl',
+        text defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl'
         //text defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part/build', description: '', name: 'CheckoutDirectory',
         //text defaultValue: 'TAG1', description: '', name: 'BuildSlaveTag'
         }   
