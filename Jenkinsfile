@@ -36,6 +36,13 @@ pipeline {
                 }
             }
         }
+        stage('post build')
+        {
+            steps 
+            {
+            mail to: david.vaknin@devalore.com, subject: 'The Pipeline failed :('
+             }
+        }
         //stage('CodeAnlaysis')
         //{
            // steps 
