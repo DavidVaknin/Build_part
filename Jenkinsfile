@@ -69,6 +69,24 @@ pipeline {
                 //sh 'Cppcheck_reports/index.html'
                 //sh './testfoo --gtest_output=xml'
                 sh 'ls -l'
+            /* ...unchanged... */
+
+            // Archive the built artifacts
+            archive (includes: 'pkg/*.gem')
+
+            // publish html
+            // snippet generator doesn't include "target:"
+            publishHTML (target: [
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: 'coverage',
+                reportFiles: 'index.html',
+                reportName: "RCov Report"
+                ])
+
+            }
+
             }
             post { 
                     failure { 
