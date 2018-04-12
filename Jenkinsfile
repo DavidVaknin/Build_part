@@ -7,7 +7,7 @@ pipeline {
         string(defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: 'The url of the git repository the contains the projects CMakeLists.txt file in the root directory.  ', name: 'RepositoryUrl')
         string(defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part', description: 'A workspace directory on the master and build-slave into which the code is checked-out and which is used for the build.  ', name: 'CheckoutDirectory')
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
-        string(defaultValue: 'master', description: 'Relevant brunch to test.', name: 'Brunch')
+        string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
     }   
     stages  
      {
@@ -38,7 +38,7 @@ pipeline {
                         // checkout sources
                         checkout([$class: 'GitSCM',
                             userRemoteConfigs: [[url: params.RepositoryUrl]],
-                            branches: [[name: params.Brunch]],
+                            branches: [[name: params.Branch]],
                             extensions: [[$class: 'CleanBeforeCheckout']]]
                         )
                 
