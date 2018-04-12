@@ -16,6 +16,7 @@ pipeline {
             {
                sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> result.xml'
                sh 'ls'
+               sh './result.xml'
                // junit 'reports/**/*.xml' 
             }
         }
