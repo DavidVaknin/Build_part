@@ -16,7 +16,8 @@ pipeline {
             {
                sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> result.xml'
                sh 'ls -l'
-               //junit 'result.xml' 
+               // Cppcheck Dosnt Support for now
+               //   junit 'result.xml' 
             }
         }
         stage('Build and Test') 
@@ -52,14 +53,15 @@ pipeline {
                      step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
                 }
+
         }
-       // stage('Deploy') 
-        //{
-           // steps 
-           // {
-               // sh 'make publish'
-          //  }
-       // }
+        stage('Report') 
+        {
+            steps 
+            {
+                sh 'ls -l'
+            }
+        }
     }
 }
 
