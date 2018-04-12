@@ -69,7 +69,7 @@ pipeline {
                 //sh 'Cppcheck_reports/index.html'
                 //sh './testfoo --gtest_output=xml'
                 sh 'ls -l'
-                sh 'rm cppcheck_reports && rm result.xml'
+               
 
 
             /* ...HTML report... */
