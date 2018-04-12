@@ -61,6 +61,7 @@ pipeline {
              steps 
             {
                 sh 'cd test/testfoo/'
+                sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir='
                 //sh './testfoo --gtest_output=xml'
                 sh 'ls'
             }
