@@ -49,12 +49,23 @@ pipeline {
                     }
                 }
             }
-                post { 
-                    failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
-                    }
-                }
+                post {
 
+                    failure {
+                        mail to: 'david.vaknin@devalore.com',
+                        subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                        body: "Build failed: ${env.BUILD_URL}"
+                    }
+
+                    success {
+                        if (currentBuild.previousBuild != null && currentBuild.previousBuild.result != 'SUCCESS') {
+                            mail to: 'david.vaknin@devalore.com',
+                            subject: "Pipeline Success: ${currentBuild.fullDisplayName}",
+                            body: "Build is back to normal (success): ${env.BUILD_URL}"     
+                        }           
+                    }
+                 }
+                
         }
          stage('Report') 
         {
