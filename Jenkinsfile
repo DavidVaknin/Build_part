@@ -4,7 +4,7 @@ pipeline {
 
     parameters
     {
-        text defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl',
+         booleanParam(defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: '', name: 'RepositoryUrl'),
         booleanParam(defaultValue: false, name: 'OPTION_1', description: 'Process option 1')
     }   
     stages  
