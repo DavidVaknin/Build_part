@@ -72,6 +72,7 @@ pipeline {
                     failure { 
                      step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
+            }
         }
     }
 }
