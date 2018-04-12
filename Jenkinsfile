@@ -10,6 +10,14 @@ pipeline {
     }   
     stages  
      {
+          stage('Analysis test')
+        {
+            steps 
+            {
+               sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libfoo/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu main/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu test/ 2> test/result.xml'
+               // junit 'reports/**/*.xml' 
+            }
+        }
         stage('Build and Test') 
         {
 
@@ -43,24 +51,6 @@ pipeline {
                      step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
                 }
-        }
-         
-
-        //stage('CodeAnlaysis')
-        //{
-           // steps 
-            //{
-               // sh 'make check'
-               // junit 'reports/**/*.xml' 
-           // }
-       // }
-        stage('Test')
-        {
-            steps 
-            {
-               sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libfoo/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu main/ 2> result.xml && cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu test/ 2> test/result.xml'
-               // junit 'reports/**/*.xml' 
-            }
         }
        // stage('Deploy') 
         //{
