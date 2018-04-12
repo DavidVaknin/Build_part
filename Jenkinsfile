@@ -72,7 +72,7 @@ pipeline {
             }
             post { 
                     failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
+                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
             }
         }
