@@ -16,7 +16,7 @@ pipeline {
             {
                sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> result.xml'
                sh 'ls -l'
-               junit 'result.xml' 
+               //junit 'result.xml' 
             }
         }
         stage('Build and Test') 
@@ -48,7 +48,7 @@ pipeline {
                 }
             }
                 post { 
-                    always { 
+                    failure { 
                      step([$class: 'Mailer', notifyEveryUnstableBuild: true, recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
                 }
