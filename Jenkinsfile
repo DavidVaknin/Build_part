@@ -57,10 +57,11 @@ pipeline {
         }
          stage('Report') 
         {
-            steps 
+             steps 
             {
                 sh 'cd test/testfoo/'
-                sh './testfoo --gtest_output=xml'
+                //sh './testfoo --gtest_output=xml'
+                sh 'ls'
             }
         }
     }
