@@ -4,9 +4,9 @@ pipeline {
 
     parameters
     {
-        booleanParam(defaultValue: false, name: 'ALL', description: 'Process all')
-        booleanParam(defaultValue: false, name: 'OPTION_1', description: 'Process option 1')
-        booleanParam(defaultValue: false, name: 'OPTION_2', description: 'Process options 2')
+        string(defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: 'The url of the git repository the contains the projects CMakeLists.txt file in the root directory.  ', name: 'RepositoryUrl')
+        string(defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part', description: 'A workspace directory on the master and build-slave into which the code is checked-out and which is used for the build.  ', name: 'CheckoutDirectory')
+        booleanParam(defaultValue: 'Tag1', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
     }   
     stages  
      {
@@ -19,7 +19,7 @@ pipeline {
                 {
                     // acquiering an extra workspace seems to be necessary to prevent interaction between
                     // the parallel run nodes, although node() should already create an own workspace.
-                    ws('/home/matt/Documents/DuduV/Build_part/Build_part')   
+                    ws(params.CheckoutDirectory)   
                     {   
                         // debug info
                         printJobParameter()
