@@ -85,7 +85,7 @@ pipeline {
                 keepAll: true,
                 reportDir: 'Cppcheck_reports',
                 reportFiles: 'index.html',
-                reportName: "RCov Report"
+                reportName: "Cppcheck Report"
                 ])
 
             }
