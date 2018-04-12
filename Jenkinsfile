@@ -10,14 +10,14 @@ pipeline {
      {
         stage('Build and Test') 
         {
-            
+
             steps
             {   
                 node(params.BuildSlaveTag)
                 {
                     // acquiering an extra workspace seems to be necessary to prevent interaction between
                     // the parallel run nodes, although node() should already create an own workspace.
-                    ws(params.CheckoutDirectory)   
+                    ws('/home/matt/Documents/DuduV/Build_part/Build_part')   
                     {   
                         // debug info
                         printJobParameter()
