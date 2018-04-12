@@ -69,7 +69,9 @@ pipeline {
                 //sh 'Cppcheck_reports/index.html'
                 //sh './testfoo --gtest_output=xml'
                 sh 'ls -l'
-            /* ...unchanged... */
+
+
+            /* ...HTML report... */
 
             // Archive the built artifacts
             archive (includes: 'pkg/*.gem')
@@ -80,7 +82,7 @@ pipeline {
                 allowMissing: false,
                 alwaysLinkToLastBuild: false,
                 keepAll: true,
-                reportDir: '',
+                reportDir: 'coverage',
                 reportFiles: 'index.html',
                 reportName: "RCov Report"
                 ])
