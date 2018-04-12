@@ -77,7 +77,7 @@ pipeline {
         }
     }
 }
-def workspace = manager.build.getEnvVars()["WORKSPACE"]
+
 
 def printJobParameter()
 {
