@@ -15,7 +15,7 @@ pipeline {
         {
             steps 
             {
-               sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> result.xml'
+               sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppchaeck_result.xml'
                sh 'ls -l'
                // Cppcheck Dosnt Support for now
                //   junit 'result.xml' 
