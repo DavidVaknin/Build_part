@@ -62,10 +62,11 @@ pipeline {
             {
                 sh 'cd test/testfoo/'
                 sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=Cppcheck_reports --source-dir='
+                sh 'ls -l'
                 sh 'chmod +r Cppcheck_reports/index.html'
                 sh 'Cppcheck_reports/index.html'
                 //sh './testfoo --gtest_output=xml'
-                sh 'ls'
+                sh 'ls -l'
             }
         }
     }
