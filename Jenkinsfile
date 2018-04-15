@@ -59,7 +59,7 @@ pipeline {
              
                 post { 
                     failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline Success: ${currentBuild.fullDisplayName}", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
+                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline build fail: ${currentBuild.fullDisplayName}", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
                 }
 
