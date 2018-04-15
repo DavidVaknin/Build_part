@@ -10,9 +10,8 @@ pipeline {
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
           choice(
                 name: 'BuildType',
-                choices:"debug\nrelease",
+                choices:"Debug\nRelease",
                 description: "Select build type")
-        //choice(choices: ['debug', 'release'],description: 'Select build type', name: 'BuildType')
     }   
     
     stages  
