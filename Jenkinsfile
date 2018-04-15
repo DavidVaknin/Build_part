@@ -42,8 +42,9 @@ pipeline {
                             extensions: [[$class: 'CleanBeforeCheckout']]]
                         )
                 
-                        // run cmake generate and build
-                        cmakeBuild buildDir: 'build', installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
+                        // run cmake generate and buildmkdir Release
+                        cmakeBuild buildDir: 'build', buildType: 'Release', installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                        //cmakeBuild buildDir: 'build', installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
 
                         echo '----- CMake project was build successfully -----'
                     }
