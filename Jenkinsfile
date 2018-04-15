@@ -8,10 +8,11 @@ pipeline {
         string(defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part', description: 'A workspace directory on the master and build-slave into which the code is checked-out and which is used for the build.  ', name: 'CheckoutDirectory')
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
-        choice(choices: ['debug', 'release'],description: 'Select build type', name: 'BuildType')
+        //choice(choices: ['debug', 'release'],description: 'Select build type', name: 'BuildType')
     }   
+    properties([parameters([choice(choices: ['debug', 'release'], description: '', name: 'BuildType')])])
     stages  
-     {
+     {  
           stage('Analysis test')
         {
             steps 
