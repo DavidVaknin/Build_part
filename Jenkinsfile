@@ -8,9 +8,14 @@ pipeline {
         string(defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part', description: 'A workspace directory on the master and build-slave into which the code is checked-out and which is used for the build.  ', name: 'CheckoutDirectory')
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
+          choice(
+                name: 'BuildType',
+                choices:"Debug\nRelease",
+                description: "Select build type")
     }   
+    
     stages  
-     {
+     {  
           stage('Analysis test')
         {
             steps 
@@ -26,6 +31,7 @@ pipeline {
 
             steps
             {   
+                
                 node(params.BuildSlaveTag)
                 {
                     // acquiering an extra workspace seems to be necessary to prevent interaction between
@@ -42,9 +48,9 @@ pipeline {
                             extensions: [[$class: 'CleanBeforeCheckout']]]
                         )
                 
-                        // run cmake generate and build
-                        cmakeBuild buildDir: 'build', installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
-
+                        // run cmake generate and buildmkdir Release
+                        cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                       
                         echo '----- CMake project was build successfully -----'
                     }
                 }
@@ -52,7 +58,7 @@ pipeline {
              
                 post { 
                     failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline Success: ${currentBuild.fullDisplayName}", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
+                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline build fail: ${currentBuild.fullDisplayName}", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
                 }
 
@@ -62,9 +68,8 @@ pipeline {
              steps 
             {
                 sh 'cd test/testfoo/'
-                sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=Cppcheck_reports --source-dir='
+                sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir='
                 
-                //sh 'ls -l'
                 //sh 'chmod -R 777 Cppcheck_reports/index.html'
                 //sh 'Cppcheck_reports/index.html'
                 //sh './testfoo --gtest_output=xml'
@@ -74,7 +79,8 @@ pipeline {
 
             /* ...HTML report... */
 
-            // Archive the built artifacts
+            // Archive the built artifactsa
+
             archive (includes: 'pkg/*.gem')
 
             // publish html
@@ -85,7 +91,7 @@ pipeline {
                 keepAll: true,
                 reportDir: 'Cppcheck_reports',
                 reportFiles: 'index.html',
-                reportName: "RCov Report"
+                reportName: "Cppcheck Report"
                 ])
 
             }
