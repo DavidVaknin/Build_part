@@ -89,7 +89,7 @@ pipeline {
                 allowMissing: false,
                 alwaysLinkToLastBuild: false,
                 keepAll: true,
-                reportDir: 'Cppcheck_reports',
+                reportDir: 'cppcheck_reports',
                 reportFiles: 'index.html',
                 reportName: "Cppcheck Report"
                 ])
