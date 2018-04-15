@@ -10,7 +10,7 @@ pipeline {
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
         //choice(choices: ['debug', 'release'],description: 'Select build type', name: 'BuildType')
     }   
-    properties([parameters([choice(choices: ['debug', 'release'], description: '', name: 'BuildType')])])
+    
     stages  
      {  
           stage('Analysis test')
@@ -28,6 +28,7 @@ pipeline {
 
             steps
             {   
+                properties([parameters([choice(choices: ['debug', 'release'], description: '', name: 'BuildType')])])
                 node(params.BuildSlaveTag)
                 {
                     // acquiering an extra workspace seems to be necessary to prevent interaction between
