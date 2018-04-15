@@ -70,7 +70,7 @@ pipeline {
                 sh 'cd test/testfoo/'
                 sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=Cppcheck_reports --source-dir='
                 
-                //sh 'ls -l'
+                sh 'rm -r Cppcheck_reports'
                 //sh 'chmod -R 777 Cppcheck_reports/index.html'
                 //sh 'Cppcheck_reports/index.html'
                 //sh './testfoo --gtest_output=xml'
