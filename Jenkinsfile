@@ -49,9 +49,8 @@ pipeline {
                         )
                 
                         // run cmake generate and buildmkdir Release
-                        //cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
-                        cmakeBuild buildDir: 'build', installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
-
+                        cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                       
                         echo '----- CMake project was build successfully -----'
                     }
                 }
