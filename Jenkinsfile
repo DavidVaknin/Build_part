@@ -90,7 +90,7 @@ pipeline {
 
                  // Archive the built artifacts
                 archive (includes: 'pkg/*.gem')
-                archiveArtifacts "${WORKSPACE}"
+                //archiveArtifacts "xml"
                 
 
                 // publish html
