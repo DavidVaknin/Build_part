@@ -75,15 +75,7 @@ pipeline {
                 }
 
         }
-            job('example-2') {
-                publishers {
-                    archiveArtifacts {
-                        pattern('build/*.html')
-                        pattern('build/test/testfoo/*.xml')
-                        onlyIfSuccessful()
-                    }
-            }
-        }
+           
         stage('Report') 
             {
              steps 
@@ -98,6 +90,15 @@ pipeline {
 
                  // Archive the built artifacts
                 archive (includes: 'pkg/*.gem')
+                job('example-2') {
+                    publishers {
+                        archiveArtifacts {
+                            pattern('build/*.html')
+                            pattern('build/test/testfoo/*.xml')
+                            onlyIfSuccessful()
+                        }
+                    }
+                }
 
                 // publish html
                  // snippet generator doesn't include "target:"
