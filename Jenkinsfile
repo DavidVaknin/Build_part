@@ -42,6 +42,8 @@ pipeline {
                         printJobParameter()
 
                         sh '''if [ -d /home/.jenkins_workspace]
+                            then
+                                 echo "Directoty exist"
                             else
                                 mkdir /home/.jenkins_workspace
                             fi
