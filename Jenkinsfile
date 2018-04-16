@@ -1,6 +1,6 @@
 pipeline { 
     agent any 
-
+   
      parameters
     {
         string(defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: 'The url of the git repository the contains the projects CMakeLists.txt file in the root directory.  ', name: 'RepositoryUrl')
@@ -84,7 +84,7 @@ pipeline {
                 //sh 'chmod -R 777 Cppcheck_reports/index.html'
                 //sh 'Cppcheck_reports/index.html'
                 //sh './testfoo --gtest_output=xml'
-                sh 'ls -l'
+                sh 'ls test/testfoo'
 
                  /* ...HTML report... */
 
