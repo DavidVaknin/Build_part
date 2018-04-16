@@ -48,24 +48,24 @@ pipeline {
                             branches: [[name: params.Branch]],
                             extensions: [[$class: 'CleanBeforeCheckout']]]
                         )
-                    node{
+                   
                         try {
-                            notifyStarted()
+                        notifyStarted()
                         // run cmake generate and buildmkdir Release
                         cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
                        
                         echo '----- CMake project was build successfully -----'
-                         notifySuccessful()
-                         } catch (e) {
+                        notifySuccessful()
+                        } catch (e) {
                             currentBuild.result = "FAILED"
                             notifyFailed()
                             throw e
                         }
+                    
                     }
-                }
-             }                
-                
-        }
+                }                
+                    
+            }
              
                 post { 
                     failure { 
