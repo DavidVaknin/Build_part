@@ -54,7 +54,7 @@ pipeline {
                         echo '----- CMake project was build successfully -----'
                     }
                 }                
-                emailext attachLog: true, body: '${SCRIPT, template="buildlog.template"}', mimeType: 'text/html', compressLog: true, subject: 'build logs', to: 'david.vakviv@devalore.com'
+                
             }
              
                 post { 
@@ -92,6 +92,8 @@ pipeline {
                 reportName: "Cppcheck Report"
                 ])
 
+                /*Email report*/
+                emailext attachLog: true, body: '${SCRIPT, template="buildlog.template"}', mimeType: 'text/html', compressLog: true, subject: 'build logs', to: 'david.vaknin@devalore.com'
             }
             post { 
                     failure { 
