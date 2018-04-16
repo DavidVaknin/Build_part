@@ -90,6 +90,11 @@ pipeline {
 
                  // Archive the built artifacts
                 archive (includes: 'pkg/*.gem')
+                job('example-1') {
+                    publishers {
+                        archiveArtifacts('build/test/**/*.html')
+                    }
+                }
                 job('example-2') {
                     publishers {
                         archiveArtifacts {
