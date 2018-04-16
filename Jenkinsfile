@@ -93,9 +93,13 @@ pipeline {
                 reportName: "Cppcheck Report"
                 ])
 
-                /*Email report*/
+                
+                /*Email report*/ 
+                environment { 
                     def emailBody = '${SCRIPT, template="buildlog.template"}'
-                    emailext (attachLog: true, body: emailBody, compressLog: true, mimeType: 'text/html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients)
+                    }
+                    emailext (attachLog: true, body: emailBody, compressLog: true, mimeType: 'text/html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients),recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                
             }
             post { 
                     failure { 
