@@ -75,17 +75,15 @@ pipeline {
                 }
 
         }
-        stage ('Archive build output')
-            {   
-                steps{
-                    // Archive the build output artifacts.
+            job('example-2') {
+                publishers {
                     archiveArtifacts {
-                        artifacts: 
-                        pattern('build/**/*.html')
-                        pattern('build/**/*.xml')
+                        pattern('build/*.html')
+                        pattern('build/test/testfoo/*.xml')
+                        onlyIfSuccessful()
                     }
-                }
             }
+        }
         stage('Report') 
             {
              steps 
