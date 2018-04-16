@@ -12,4 +12,4 @@ target_link_libraries(myApp
     libbar
 )
 
-install(TARGETS myApp DESTINATION /home/.jenkins_workspace)
+install(TARGETS myApp DESTINATION /home/matt/Documents/DuduV/Build_part/Build_part/build)
