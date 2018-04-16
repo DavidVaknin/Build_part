@@ -95,7 +95,7 @@ pipeline {
 
                 /*Email report*/
                     def emailBody = '${SCRIPT, template="buildlog.template"}'
-                    emailext (attachLog: true, body: emailBody , compressLog: true, mimeType: 'text/html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients)
+                    emailext (attachLog: true, body: emailBody, compressLog: true, mimeType: 'text/html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients)
             }
             post { 
                     failure { 
