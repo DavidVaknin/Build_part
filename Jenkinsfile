@@ -75,6 +75,15 @@ pipeline {
                 }
 
         }
+        stage ('Archive build output')
+            {   
+                // Archive the build output artifacts.
+                archiveArtifacts {
+                    artifacts: 
+                    pattern('build/**/*.html')
+                    pattern('build/**/*.xml')
+                }
+            }
         stage('Report') 
             {
              steps 
@@ -88,7 +97,7 @@ pipeline {
 
                  /* ...HTML report... */
 
-                 // Archive the built artifactsa
+                 // Archive the built artifacts
                 archive (includes: 'pkg/*.gem')
 
                 // publish html
@@ -109,6 +118,9 @@ pipeline {
             post { 
                 failure { 
                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
+                always {
+                    junit 'build/reports/**/*.xml'
+                    }
                 }
             }
         }
