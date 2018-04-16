@@ -8,6 +8,7 @@ pipeline {
         string(defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part', description: 'A workspace directory on the master and build-slave into which the code is checked-out and which is used for the build.  ', name: 'CheckoutDirectory')
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
+        string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
           choice(
                 name: 'BuildType',
                 choices:"Debug\nRelease",
@@ -59,7 +60,7 @@ pipeline {
              
                 post { 
                     failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline build fail: ${currentBuild.fullDisplayName}", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
+                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline build fail: ${currentBuild.fullDisplayName}", recipients: params.MailRecipients, sendToIndividuals: true])
                     }
                 }
 
@@ -93,11 +94,12 @@ pipeline {
                 ])
 
                 /*Email report*/
-                emailext attachLog: true, body: '${SCRIPT, template="buildlog.template"}', mimeType: 'text/html', compressLog: true, subject: 'build logs', to: 'david.vaknin@devalore.com'
+                    def emailBody = '${SCRIPT, template="buildlog.template"}'
+                    emailext (attachLog: true, body: emailBody , compressLog: true, mimeType: 'text/html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients)
             }
             post { 
                     failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
+                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
                     }
             }
         }
