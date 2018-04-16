@@ -41,13 +41,13 @@ pipeline {
                         // debug info
                         printJobParameter()
 
-                        sh '''if [ -d /home/jenkins_workspace]
-                            then
-                                 echo "Directoty exist"
-                            else
-                                mkdir /home/jenkins_workspace
-                            fi
-                            '''
+                        //sh '''if [ -d /usr/share]
+                         //   then
+                         //        echo "Directoty exist"
+                         //   else
+                         //       mkdir /usr/share
+                         //   fi
+                         //   '''
 
                         // checkout sources
                         checkout([$class: 'GitSCM',
