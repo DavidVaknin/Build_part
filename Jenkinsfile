@@ -50,12 +50,12 @@ pipeline {
                         )
                    
                         try {
-                        notifyStarted()
-                        // run cmake generate and buildmkdir Release
-                        cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
-                       
-                        echo '----- CMake project was build successfully -----'
-                        notifySuccessful()
+                            notifyStarted()
+                            // run cmake generate and buildmkdir Release
+                            cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                        
+                            echo '----- CMake project was build successfully -----'
+                            notifySuccessful()
                         } catch (e) {
                             currentBuild.result = "FAILED"
                             notifyFailed()
