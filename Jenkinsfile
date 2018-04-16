@@ -49,19 +49,13 @@ pipeline {
                             extensions: [[$class: 'CleanBeforeCheckout']]]
                         )
                    
-                        script{
-                            try {
-                                notifyStarted()
-                                // run cmake generate and buildmkdir Release
-                                cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                        
+                        // run cmake generate and buildmkdir Release
+                        cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                    
+                        echo '----- CMake project was build successfully -----'
+                                
                             
-                                echo '----- CMake project was build successfully -----'
-                                notifySuccessful()
-                            } catch (e) {
-                                currentBuild.result = "FAILED"
-                                notifyFailed()
-                                throw e
-                            }
                         }
                     }
                 }                       
@@ -127,51 +121,4 @@ BuildSlaveTag = ${params.BuildSlaveTag}
 """
     
     echo introduction
-}
-def notifyStarted() {
-  // send to Slack
-  slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
- 
-  // send to HipChat
-  hipchatSend (color: 'YELLOW', notify: true,
-      message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-    )
- 
-  // send to email
-  emailext (
-      subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-      body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-        <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-    )
-}
-
-def notifySuccessful() {
-  slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
- 
-  hipchatSend (color: 'GREEN', notify: true,
-      message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-    )
- 
-  emailext (
-      subject: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-      body: """<p>SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-        <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-    )
-}
-
-def notifyFailed() {
-  slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
- 
-  hipchatSend (color: 'RED', notify: true,
-      message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-    )
- 
-  emailext (
-      subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-      body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-        <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
-      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-    )
 }
