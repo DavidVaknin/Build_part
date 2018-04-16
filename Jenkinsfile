@@ -63,8 +63,7 @@ pipeline {
                         }
                     
                     }
-                }                
-                    
+                }                       
             }
              
                 post { 
@@ -74,7 +73,7 @@ pipeline {
                 }
 
         }
-         stage('Report') 
+        stage('Report') 
         {
              steps 
             {
@@ -85,22 +84,21 @@ pipeline {
                 //sh './testfoo --gtest_output=xml'
                 sh 'ls -l'
 
-            /* ...HTML report... */
+                 /* ...HTML report... */
 
-            // Archive the built artifactsa
+                 // Archive the built artifactsa
+                archive (includes: 'pkg/*.gem')
 
-            archive (includes: 'pkg/*.gem')
-
-            // publish html
-            // snippet generator doesn't include "target:"
-            publishHTML (target: [
-                allowMissing: false,
-                alwaysLinkToLastBuild: false,
-                keepAll: true,
-                reportDir: 'cppcheck_reports',
-                reportFiles: 'index.html',
-                reportName: "Cppcheck Report"
-                ])
+                // publish html
+                 // snippet generator doesn't include "target:"
+                publishHTML (target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'cppcheck_reports',
+                    reportFiles: 'index.html',
+                    reportName: "Cppcheck Report"
+                    ])
 
                 
                 /*Email report*/ 
@@ -108,9 +106,9 @@ pipeline {
                 
             }
             post { 
-                    failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
-                    }
+                failure { 
+                    step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
+                }
             }
         }
     }
