@@ -1,4 +1,3 @@
-
 pipeline { 
     agent any 
 
@@ -59,7 +58,7 @@ pipeline {
                         }
                     }
                 }                       
-            }
+            
              
                 post { 
                     failure { 
@@ -69,7 +68,8 @@ pipeline {
 
         }
         stage('Report') 
-        {
+            {/*Email report*/ 
+                    emailext (attachLog: true, body: '''${SCRIPT, template="buildlog.template"}''', compressLog: true, mimeType: 'text/html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients,recipientProviders: [[$class: 'DevelopersRecipientProvider']])
              steps 
             {
                 sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir='
@@ -94,11 +94,7 @@ pipeline {
                     reportFiles: 'index.html',
                     reportName: "Cppcheck Report"
                     ])
-
-                
-                /*Email report*/ 
-                emailext (attachLog: true, body: '''${SCRIPT, template="buildlog.template"}''', compressLog: true, mimeType: 'text/html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients,recipientProviders: [[$class: 'DevelopersRecipientProvider']])
-                
+    
             }
             post { 
                 failure { 
@@ -107,7 +103,8 @@ pipeline {
             }
         }
     }
-}
+} 
+
 
 
 def printJobParameter()
