@@ -53,7 +53,8 @@ pipeline {
                        
                         echo '----- CMake project was build successfully -----'
                     }
-                }
+                }                
+                emailext attachLog: true, '${SCRIPT, template="buildlog.template"}', mimeType: 'text/html', compressLog: true, subject: 'build logs', to: 'david.vakviv@devalore.com'
             }
              
                 post { 
@@ -61,7 +62,6 @@ pipeline {
                      step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline build fail: ${currentBuild.fullDisplayName}", recipients: 'david.vaknin@devalore.com', sendToIndividuals: true])
                     }
                 }
-                emailext attachLog: true, '${SCRIPT, template="buildlog.template"}', mimeType: 'text/html', compressLog: true, subject: 'build logs', to: 'david.vakviv@devalore.com'
 
         }
          stage('Report') 
