@@ -41,11 +41,11 @@ pipeline {
                         // debug info
                         printJobParameter()
 
-                        sh 'if [ -d /home/.jenkins_workspace]
+                        sh '''if [ -d /home/.jenkins_workspace]
                             else
                                 mkdir /home/.jenkins_workspace
                             fi
-                            '
+                            '''
 
                         // checkout sources
                         checkout([$class: 'GitSCM',
