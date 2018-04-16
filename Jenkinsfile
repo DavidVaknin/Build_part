@@ -48,6 +48,7 @@ pipeline {
                             branches: [[name: params.Branch]],
                             extensions: [[$class: 'CleanBeforeCheckout']]]
                         )
+                    node{
                         try {
                             notifyStarted()
                         // run cmake generate and buildmkdir Release
@@ -61,9 +62,10 @@ pipeline {
                             throw e
                         }
                     }
-                }                
+                }
+             }                
                 
-            }
+        }
              
                 post { 
                     failure { 
