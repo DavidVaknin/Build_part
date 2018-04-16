@@ -77,11 +77,13 @@ pipeline {
         }
         stage ('Archive build output')
             {   
-                // Archive the build output artifacts.
-                archiveArtifacts {
-                    artifacts: 
-                    pattern('build/**/*.html')
-                    pattern('build/**/*.xml')
+                steps{
+                    // Archive the build output artifacts.
+                    archiveArtifacts {
+                        artifacts: 
+                        pattern('build/**/*.html')
+                        pattern('build/**/*.xml')
+                    }
                 }
             }
         stage('Report') 
@@ -90,8 +92,7 @@ pipeline {
             {
                 sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir='
                 
-                //sh 'chmod -R 777 Cppcheck_reports/index.html'
-                //sh 'Cppcheck_reports/index.html'
+                
                 //sh './testfoo --gtest_output=xml'
                 sh 'ls test/testfoo'
 
