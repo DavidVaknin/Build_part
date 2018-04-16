@@ -90,20 +90,8 @@ pipeline {
 
                  // Archive the built artifacts
                 archive (includes: 'pkg/*.gem')
-                job('example-1') {
-                    publishers {
-                        archiveArtifacts('build/test/**/*.html')
-                    }
-                }
-                job('example-2') {
-                    publishers {
-                        archiveArtifacts {
-                            pattern('build/*.html')
-                            pattern('build/test/testfoo/*.xml')
-                            onlyIfSuccessful()
-                        }
-                    }
-                }
+                archiveArtifacts "${WORKSPACE}"
+                
 
                 // publish html
                  // snippet generator doesn't include "target:"
