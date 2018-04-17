@@ -128,13 +128,13 @@ pipeline {
             }  
             post {
                 always {
-                //  emailext (
-                //     to: params.MailRecipients,
-                //     subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number}",
-                //     body: 'SUCCESS')
-                // }
-                step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
+                 emailext (
+                    to: params.MailRecipients,
+                    subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number}",
+                    body: 'SUCCESS')
                 }
+                // step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
+                // }
             } 
         }
     }
