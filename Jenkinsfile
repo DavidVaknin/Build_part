@@ -121,7 +121,7 @@ pipeline {
             }
             post { 
                 failure { 
-                    step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
+                    step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - Report ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
                 }
             }
         }
