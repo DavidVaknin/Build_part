@@ -22,12 +22,12 @@ pipeline {
            
             steps 
             { 
-                if(params.send_mail){
+                step(if(params.send_mail){
                     sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml'
                     sh 'ls -l'
                     // Cppcheck Dosnt Support for now
                     //   junit 'result.xml' 
-                }
+                })
             }
         }
         stage('Build and Test') 
