@@ -105,7 +105,7 @@ pipeline {
                     ])
 
                     /*Email report*/ 
-                    emailext (attachLog: true, body: '''${SCRIPT, template="buildlog.template"}''', compressLog: true, mimeType: 'html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients)
+                    //emailext (attachLog: true, body: '''${SCRIPT, template="buildlog.template"}''', compressLog: true, mimeType: 'html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients)
 
             }
             post { 
@@ -116,6 +116,17 @@ pipeline {
                     }
                 }
             }
+        }
+        stage('Send email') {
+            def mailRecipients = params.MailRecipients
+            
+
+            emailext body: '''${SCRIPT, template="buildlog.template"}''',
+             mimeType: 'text/html',
+             subject: "[Jenkins] Buildlog",
+             to: "${mailRecipients}",
+             replyTo: "${mailRecipients}",
+             recipientProviders: [[$class: 'CulpritsRecipientProvider']]
         }
     }
 } 
