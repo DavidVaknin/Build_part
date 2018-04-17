@@ -67,10 +67,9 @@ pipeline {
                     }
                 }                       
             
-             
                 post { 
                     failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "Pipeline build fail: ${currentBuild.fullDisplayName}", recipients: params.MailRecipients, sendToIndividuals: true])
+                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
                     }
                 }
 
@@ -104,16 +103,10 @@ pipeline {
                     reportName: "Cppcheck Report"
                     ])
 
-                    /*Email report*/ 
-                    //emailext (attachLog: true, body: '''${SCRIPT, template="buildlog.template"}''', compressLog: true, mimeType: 'html', subject: 'Build logs', to: params.MailRecipients, replyTo: params.MailRecipients)
-
             }
             post { 
                 failure { 
-                    step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline FAIL", recipients: params.MailRecipients, sendToIndividuals: true])
-                always {
-                    junit 'build/cppcheck_reports/*.html'
-                    }
+                    step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
                 }
             }
         }
@@ -126,16 +119,6 @@ pipeline {
                 replyTo: params.MailRecipients,
                 recipientProviders: [[$class: 'CulpritsRecipientProvider']])
             }  
-            post {
-                always {
-                 emailext (
-                    to: params.MailRecipients,
-                    subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number}",
-                    body: 'SUCCESS')
-                }
-                // step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
-                // }
-            } 
         }
     }
 } 
