@@ -125,7 +125,16 @@ pipeline {
                 to: params.MailRecipients,
                 replyTo: params.MailRecipients,
                 recipientProviders: [[$class: 'CulpritsRecipientProvider']]
-        }   }
+            }  
+            post {
+                always {
+                 emailext (
+                    to: params.MailRecipients,
+                    subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number}",
+                    body: '${FILE, path="$WORKSPACE/results.xml"}')
+                }
+            } 
+        }
     }
 } 
 
