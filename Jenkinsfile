@@ -63,7 +63,7 @@ pipeline {
                         )
                    
                         script{
-                            if(params.Report){
+                            if(params.Build){
                                 // run cmake generate and buildmkdir Release
                                 cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
                              }else echo "build step skipped"
