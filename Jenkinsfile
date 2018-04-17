@@ -134,6 +134,7 @@ pipeline {
                 //     body: 'SUCCESS')
                 // }
                 step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
+                }
             } 
         }
     }
