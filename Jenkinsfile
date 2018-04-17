@@ -8,11 +8,11 @@ pipeline {
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
         string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
+        choice(name: 'BuildType', choices:"Debug\nRelease", description: "Select build type")       
+        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Analysis_test')
+        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: '')
+        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: '')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
-          choice(
-                name: 'BuildType',
-                choices:"Debug\nRelease",
-                description: "Select build type")
     }   
     
     stages  
@@ -23,7 +23,7 @@ pipeline {
             steps 
             { 
                 script{
-                    if(params.Send_mail){
+                    if(params.Analysis_test){
                     sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml'
                     sh 'ls -l'
                     // Cppcheck Dosnt Support for now
@@ -131,15 +131,19 @@ pipeline {
                 }
             }
         }
-        stage('Send email') {
-            steps{
-                emailext (body: '''${SCRIPT, template="buildlog.template"}''',
-                mimeType: 'text/html',
-                subject: "[Jenkins] Buildlog",
-                to: params.MailRecipients,
-                replyTo: params.MailRecipients,
-                recipientProviders: [[$class: 'CulpritsRecipientProvider']])
-            }  
+        script{
+            if(params.Analysis_test){
+                stage('Send email') {
+                    steps{
+                        emailext (body: '''${SCRIPT, template="buildlog.template"}''',
+                        mimeType: 'text/html',
+                        subject: "[Jenkins] Buildlog",
+                        to: params.MailRecipients,
+                        replyTo: params.MailRecipients,
+                        recipientProviders: [[$class: 'CulpritsRecipientProvider']])
+                    }
+                }  
+            }
         }
     }
 } 
