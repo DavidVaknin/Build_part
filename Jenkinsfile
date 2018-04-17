@@ -130,7 +130,7 @@ pipeline {
                 always {
                  emailext (
                     to: params.MailRecipients,
-                    subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number}",
+                    subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number}")
                     //body: '${FILE, path="$WORKSPACE/result.xml"}')
                 }
             } 
