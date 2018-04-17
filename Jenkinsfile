@@ -118,16 +118,14 @@ pipeline {
             }
         }
         stage('Send email') {
-            def mailRecipients = params.MailRecipients
-            
-
-            emailext body: '''${SCRIPT, template="buildlog.template"}''',
-             mimeType: 'text/html',
-             subject: "[Jenkins] Buildlog",
-             to: "${mailRecipients}",
-             replyTo: "${mailRecipients}",
-             recipientProviders: [[$class: 'CulpritsRecipientProvider']]
-        }
+            steps{
+                emailext body: '''${SCRIPT, template="buildlog.template"}''',
+                mimeType: 'text/html',
+                subject: "[Jenkins] Buildlog",
+                to: params.MailRecipients,
+                replyTo: params.MailRecipients,
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+        }   }
     }
 } 
 
