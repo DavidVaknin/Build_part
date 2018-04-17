@@ -8,6 +8,7 @@ pipeline {
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
         string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
+        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'send_mail')
           choice(
                 name: 'BuildType',
                 choices:"Debug\nRelease",
@@ -17,13 +18,15 @@ pipeline {
     stages  
      {  
           stage('Analysis test')
-        {
+        {   
+            if(params.send_mail){
             steps 
             {
                sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml'
                sh 'ls -l'
                // Cppcheck Dosnt Support for now
                //   junit 'result.xml' 
+            }
             }
         }
         stage('Build and Test') 
@@ -87,18 +90,18 @@ pipeline {
 
                     /*-------Robot FrameWork------*/
 
-                    sh "pybot ${WORKSPACE}/robot3_test/test1.robot"
+                    //sh "pybot ${WORKSPACE}/robot3_test/test1.robot"
 
-                step([
-                    $class : 'RobotPublisher',
-                    outputPath : params.CheckoutDirectory,
-                    outputFileName : "output.xml",
-                     reportFileName: 'report.html',
-                    disableArchiveOutput : false,
-                    logFileName: 'log.html',
-                    passThreshold : 100,
-                    unstableThreshold: 95.0
-                ])
+                //step([
+                 //   $class : 'RobotPublisher',
+                   // outputPath : params.CheckoutDirectory,
+                    //outputFileName : "output.xml",
+                     //reportFileName: 'report.html',
+                    //disableArchiveOutput : false,
+                    //logFileName: 'log.html',
+                    //passThreshold : 100,
+                    //unstableThreshold: 95.0
+                //])
 
                  /* ...HTML report... */
 
