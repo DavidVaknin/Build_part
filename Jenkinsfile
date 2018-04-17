@@ -132,10 +132,10 @@ pipeline {
             }
         }
         
-            stage('Send email') {
-                script{
-                 if(params.Analysis_test){
-                    steps{
+        stage('Send email') {
+            script{
+                steps{
+                    if(params.Analysis_test){
                         emailext (body: '''${SCRIPT, template="buildlog.template"}''',
                         mimeType: 'text/html',
                         subject: "[Jenkins] Buildlog",
