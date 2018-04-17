@@ -131,9 +131,10 @@ pipeline {
                 }
             }
         }
-        script{
-            if(params.Analysis_test){
-                stage('Send email') {
+        
+            stage('Send email') {
+                script{
+                 if(params.Analysis_test){
                     steps{
                         emailext (body: '''${SCRIPT, template="buildlog.template"}''',
                         mimeType: 'text/html',
@@ -146,6 +147,7 @@ pipeline {
             }
         }
     }
+
 } 
 
 
