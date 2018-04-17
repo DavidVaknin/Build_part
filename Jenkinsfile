@@ -10,13 +10,13 @@ pipeline {
         string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
         choice(name: 'BuildType', choices:"Debug\nRelease", description: "Select build type")       
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Analysis_test')
-        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: '')
-        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: '')
+        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Build')
+        booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Report')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
     }   
     
     stages  
-     {  
+    {  
           stage('Analysis test')
         {   
            
@@ -28,7 +28,7 @@ pipeline {
                     sh 'ls -l'
                     // Cppcheck Dosnt Support for now
                     //   junit 'result.xml' 
-                    }
+                    } else echo "Analysis test step skipped"
                 }
             }
         }
@@ -62,68 +62,70 @@ pipeline {
                             extensions: [[$class: 'CleanBeforeCheckout']]]
                         )
                    
-                        
-                        // run cmake generate and buildmkdir Release
-                        cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
-                    
-                        echo '----- CMake project was build successfully -----'
-                                
-                            
-                        }
-                    }
-                }                       
-            
-                post { 
-                    failure { 
-                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
+                        script{
+                            if(params.Report){
+                                // run cmake generate and buildmkdir Release
+                                cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                             }else echo "build step skipped"
+                        }        
                     }
                 }
-
+            }                       
+            
+            post { 
+                failure { 
+                    step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
+                }
+            }
         }
            
         stage('Report') 
             {
-             steps 
+            steps 
             {
-                sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir='
-                
-                
-                //sh './testfoo --gtest_output=xml'
-                sh 'ls test/testfoo'
+                script{
+                    if(params.Report){
+                        sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir='
+                        
+                        
+                        //sh './testfoo --gtest_output=xml'
+                        sh 'ls test/testfoo'
 
-                    /*-------Robot FrameWork------*/
+                            /*-------Robot FrameWork------*/
 
-                    //sh "pybot ${WORKSPACE}/robot3_test/test1.robot"
+                            //sh "pybot ${WORKSPACE}/robot3_test/test1.robot"
 
-                //step([
-                 //   $class : 'RobotPublisher',
-                   // outputPath : params.CheckoutDirectory,
-                    //outputFileName : "output.xml",
-                     //reportFileName: 'report.html',
-                    //disableArchiveOutput : false,
-                    //logFileName: 'log.html',
-                    //passThreshold : 100,
-                    //unstableThreshold: 95.0
-                //])
+                        //step([
+                        //   $class : 'RobotPublisher',
+                        // outputPath : params.CheckoutDirectory,
+                            //outputFileName : "output.xml",
+                            //reportFileName: 'report.html',
+                            //disableArchiveOutput : false,
+                            //logFileName: 'log.html',
+                            //passThreshold : 100,
+                            //unstableThreshold: 95.0
+                        //])
 
-                 /* ...HTML report... */
+                        /* ...HTML report... */
 
-                 // Archive the built artifacts
-                archive (includes: 'pkg/*.gem')
-                //archiveArtifacts "xml"
-                
+                        // Archive the built artifacts
+                        archive (includes: 'pkg/*.gem')
+                        //archiveArtifacts "xml"
+                        
 
-                // publish html
-                 // snippet generator doesn't include "target:"
-                publishHTML (target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'cppcheck_reports',
-                    reportFiles: 'index.html',
-                    reportName: "Cppcheck Report"
-                    ])
+                        // publish html
+                        // snippet generator doesn't include "target:"
+                        publishHTML (target: [
+                            allowMissing: false,
+                            alwaysLinkToLastBuild: false,
+                            keepAll: true,
+                            reportDir: 'cppcheck_reports',
+                            reportFiles: 'index.html',
+                            reportName: "Cppcheck Report"
+                            ])
 
+                    }else echo "Report step skipped"   
+                }
             }
             post { 
                 failure { 
@@ -142,8 +144,8 @@ pipeline {
                         to: params.MailRecipients,
                         replyTo: params.MailRecipients,
                         recipientProviders: [[$class: 'CulpritsRecipientProvider']])
-                    }
-                    else echo "Send mail skipped"
+
+                    }else echo "Send mail skipped"
                 }  
             }
         }
