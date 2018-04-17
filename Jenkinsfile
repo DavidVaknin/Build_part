@@ -87,7 +87,7 @@ pipeline {
 
                     /*-------Robot FrameWork------*/
 
-                    sh "pybot robot3_test/test1.robot"
+                    sh "pybot ${WORKSPACE}/robot3_test/test1.robot"
 
                 step([
                     $class : 'RobotPublisher',
