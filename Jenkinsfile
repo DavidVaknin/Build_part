@@ -143,6 +143,7 @@ pipeline {
                         replyTo: params.MailRecipients,
                         recipientProviders: [[$class: 'CulpritsRecipientProvider']])
                     }
+                    else echo "Send mail skipped"
                 }  
             }
         }
