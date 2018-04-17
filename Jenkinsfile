@@ -112,26 +112,26 @@ pipeline {
                 failure { 
                     step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject:"pipeline SUCCESS", recipients: params.MailRecipients, sendToIndividuals: true])
                 always {
-                    junit 'build/reports/**/*.xml'
+                    junit 'build/cppcheck_reports/*.html'
                     }
                 }
             }
         }
         stage('Send email') {
             steps{
-                emailext body: '''${SCRIPT, template="buildlog.template"}''',
+                emailext (body: '''${SCRIPT, template="buildlog.template"}''',
                 mimeType: 'text/html',
                 subject: "[Jenkins] Buildlog",
                 to: params.MailRecipients,
                 replyTo: params.MailRecipients,
-                recipientProviders: [[$class: 'CulpritsRecipientProvider']]
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']])
             }  
             post {
                 always {
                  emailext (
                     to: params.MailRecipients,
                     subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number}",
-                    body: '${FILE, path="$WORKSPACE/result.xml"}')
+                    //body: '${FILE, path="$WORKSPACE/result.xml"}')
                 }
             } 
         }
