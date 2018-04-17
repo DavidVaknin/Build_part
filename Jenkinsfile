@@ -85,6 +85,22 @@ pipeline {
                 //sh './testfoo --gtest_output=xml'
                 sh 'ls test/testfoo'
 
+                    /*-------Robot FrameWork------*/
+
+                    sh "pybot robot3_test/test1.robot"
+                    
+                step([
+                    $class : 'RobotPublisher',
+                    outputPath : params.CheckoutDirectory,
+                    outputFileName : "ROBOT_Result_output.xml",
+                     reportFileName: 'ROBOT_Result_report.html',
+                    disableArchiveOutput : false,
+                    logFileName: 'log.html',
+                    passThreshold : 100,
+                    unstableThreshold: 95.0,
+                    otherFiles : "*.png",
+                ])
+
                  /* ...HTML report... */
 
                  // Archive the built artifacts
