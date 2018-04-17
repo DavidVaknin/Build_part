@@ -133,8 +133,8 @@ pipeline {
         }
         
         stage('Send email') {
-            script{
-                steps{
+            steps{
+                script{
                     if(params.Analysis_test){
                         emailext (body: '''${SCRIPT, template="buildlog.template"}''',
                         mimeType: 'text/html',
