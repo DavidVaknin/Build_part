@@ -103,7 +103,7 @@ pipeline {
                             /*-------Robot FrameWork------*/
                             
                         runCommand(params.RobotTestDirectory)
-                        
+
                         try{
                             step([$class: 'RobotPublisher',
                                 outputPath : ${workspace},
@@ -116,7 +116,6 @@ pipeline {
                             ])
                         }catch(any){
                             echo 'Something failed in Robot publisher'
-                            throw
                         }
  
                         /* ...HTML report... */
