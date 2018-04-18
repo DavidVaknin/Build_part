@@ -95,7 +95,7 @@ pipeline {
                         runCommand('ls ../Build_part')
                             /*-------Robot FrameWork------*/
 
-                        //runCommand("pybot ../Build_part/robot3_test/test1.robot")
+                        runCommand("pybot ../Build_part/robot3_test/test1.robot")
                         //step([
                         //   $class : 'RobotPublisher',
                         // outputPath : params.CheckoutDirectory,
