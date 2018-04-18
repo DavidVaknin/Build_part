@@ -97,8 +97,8 @@ pipeline {
 
                             /*-------Robot FrameWork------*/
 
-                        runCommand("pybot " + params.RobotTestDirectory)
-
+                        runCommand("pybot" params.RobotTestDirectory)
+                        /* try{
                          step([$class: 'RobotPublisher',
                             outputPath : params.CheckoutDirectory,
                             outputFileName : "output.xml",
@@ -108,7 +108,8 @@ pipeline {
                             passThreshold : 100,
                             unstableThreshold: 95.0
                         ])
- 
+                        }catch(any)
+  */
                         /* ...HTML report... */
 
                         // Archive the built artifacts
