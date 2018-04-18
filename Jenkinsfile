@@ -105,9 +105,7 @@ pipeline {
                         runCommand(params.RobotTestDirectory)
 
                         try{
-                            step([
-                                $class : 'RobotPublisher',
-                                outputPath : outputDirectory,
+                            step([$class : 'RobotPublisher',
                                 outputFileName : "*.xml",
                                 disableArchiveOutput : false,
                                 passThreshold : 100,
