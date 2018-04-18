@@ -103,9 +103,9 @@ pipeline {
                             /*-------Robot FrameWork------*/
                             
                         runCommand(params.RobotTestDirectory)
-                        /* try{
+                         try{
                          step([$class: 'RobotPublisher',
-                            outputPath : params.CheckoutDirectory,
+                            outputPath : ${workspace},
                             outputFileName : "output.xml",
                             reportFileName: 'report.html',
                             logFileName: 'log.html',
@@ -114,7 +114,7 @@ pipeline {
                             unstableThreshold: 95.0
                         ])
                         }catch(any)
-  */
+ 
                         /* ...HTML report... */
 
                         // Archive the built artifacts
