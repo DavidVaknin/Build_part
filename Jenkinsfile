@@ -4,7 +4,7 @@ pipeline {
      parameters
     {
         string(defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: 'The url of the git repository the contains the projects CMakeLists.txt file in the root directory.  ', name: 'RepositoryUrl')
-        string(defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part', description: 'A workspace directory on the master and build-slave into which the code is checked-out and which is used for the build.  ', name: 'CheckoutDirectory')
+        string(defaultValue: '/home/matt/Documents/DuduV/Build_part/Build_part_Workspace', description: 'A workspace directory on the master and build-slave into which the code is checked-out and which is used for the build.  ', name: 'CheckoutDirectory')
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
         string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
@@ -24,8 +24,8 @@ pipeline {
             { 
                 script{
                     if(params.Analysis_test){
-                    sh  'cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml'
-                    sh 'ls -l'
+                    runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
+                    runCommand('ls -l')
                     // Cppcheck Dosnt Support for now
                     //   junit 'result.xml' 
                     } else echo "Analysis test step skipped"
@@ -64,7 +64,7 @@ pipeline {
                    
                         script{
                             if(params.Build){
-                                // run cmake generate and buildmkdir Release
+                                // run cmake generate and build
                                 cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
                              }else echo "build step skipped"
                         }        
@@ -85,16 +85,15 @@ pipeline {
             {
                 script{
                     if(params.Report){
-                        sh 'cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir='
+                        runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')
                         
                         
                         //sh './testfoo --gtest_output=xml'
-                        sh 'ls test/testfoo'
+                       runCommand('ls test/testfoo')
 
                             /*-------Robot FrameWork------*/
 
-                            sh "pybot /robot3_test/test1.robot"
-
+                        runCommand("pybot /robot3_test/test1.robot")
                         //step([
                         //   $class : 'RobotPublisher',
                         // outputPath : params.CheckoutDirectory,
@@ -166,4 +165,16 @@ BuildSlaveTag = ${params.BuildSlaveTag}
 """
     
     echo introduction
+}
+
+def runCommand( command )
+{
+    if(isUnix())
+    {
+        sh command
+    }
+    else
+    {
+        bat command
+    }
 }
