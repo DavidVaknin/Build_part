@@ -91,7 +91,7 @@ pipeline {
                         
                         
                         //sh './testfoo --gtest_output=xml'
-                        runCommand('ls build_part/')
+                     
                         runCommand('ls ../')
                             /*-------Robot FrameWork------*/
 
