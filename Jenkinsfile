@@ -105,16 +105,16 @@ pipeline {
                         runCommand(params.RobotTestDirectory)
 
                         try{
-                            step([$class: 'RobotPublisher',
-                                outputPath : ${workspace},
-                                outputFileName : "output.xml",
-                                reportFileName: 'report.html',
-                                logFileName: 'log.html',
+                            step([
+                                $class : 'RobotPublisher',
+                                outputPath : outputDirectory,
+                                outputFileName : "*.xml",
                                 disableArchiveOutput : false,
                                 passThreshold : 100,
-                                unstableThreshold: 95.0
-                            ])
-                        }catch(any){
+                                unstableThreshold: 95.0,
+                                otherFiles : "*.png",
+                                ])
+                        }catch(exc){
                             echo 'Something failed in Robot publisher'
                         }
  
@@ -128,7 +128,7 @@ pipeline {
                         /*-----publish html-----*/
                         // snippet generator doesn't include "target:"
                         publishHTML (target: [
-                            allowMissing: false,
+                            allowMissing: false,    
                             alwaysLinkToLastBuild: false,
                             keepAll: true,
                             reportDir: 'cppcheck_reports',
