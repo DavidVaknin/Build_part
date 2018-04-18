@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20180417 16:55:39.063" generator="Robot 3.0.3 (Python 2.7.12 on linux2)">
+<suite source="/home/matt/PycharmProjects/robot3_test/test1.robot" id="s1" name="Test1">
+<test id="s1-t1" name="My Test">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${MESSAGE}</arg>
+</arguments>
+<msg timestamp="20180417 16:55:39.094" level="INFO">Hello, world!</msg>
+<status status="PASS" endtime="20180417 16:55:39.094" starttime="20180417 16:55:39.094"></status>
+</kw>
+<kw name="My Keyword">
+<arguments>
+<arg>/tmp</arg>
+</arguments>
+<kw name="Directory Should Exist" library="OperatingSystem">
+<doc>Fails unless the given path points to an existing directory.</doc>
+<arguments>
+<arg>${path}</arg>
+</arguments>
+<msg timestamp="20180417 16:55:39.095" html="yes" level="INFO">Directory '&lt;a href="file:///tmp"&gt;/tmp&lt;/a&gt;' exists.</msg>
+<status status="PASS" endtime="20180417 16:55:39.095" starttime="20180417 16:55:39.095"></status>
+</kw>
+<status status="PASS" endtime="20180417 16:55:39.095" starttime="20180417 16:55:39.094"></status>
+</kw>
+<doc>Example test</doc>
+<status status="PASS" endtime="20180417 16:55:39.095" critical="yes" starttime="20180417 16:55:39.093"></status>
+</test>
+<test id="s1-t2" name="Another Test">
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${MESSAGE}</arg>
+<arg>Hello, world!</arg>
+</arguments>
+<status status="PASS" endtime="20180417 16:55:39.097" starttime="20180417 16:55:39.096"></status>
+</kw>
+<status status="PASS" endtime="20180417 16:55:39.097" critical="yes" starttime="20180417 16:55:39.096"></status>
+</test>
+<status status="PASS" endtime="20180417 16:55:39.097" starttime="20180417 16:55:39.064"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="2">Critical Tests</stat>
+<stat fail="0" pass="2">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" id="s1" name="Test1" pass="2">Test1</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
