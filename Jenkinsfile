@@ -95,17 +95,17 @@ pipeline {
                         runCommand('ls ../Build_part')
                             /*-------Robot FrameWork------*/
 
-                        //runCommand("pybot ../Build_part/robot3_test/test1.robot")
-                        step([$class: 'RobotPublisher',
-                            outputPath : ${workspace}/robot3_test,
+                        runCommand("pybot /robot3_test/test1.robot")
+                         /*step([$class: 'RobotPublisher',
+                            outputPath : params.CheckoutDirectory/Robot_results,
                             outputFileName : "*.xml",
                             reportFileName: 'report.html',
                             logFileName: 'log.html',
                             disableArchiveOutput : false,
                             passThreshold : 100,
                             unstableThreshold: 95.0
-                        ])
-
+                        ])*/
+ 
                         /* ...HTML report... */
 
                         // Archive the built artifacts

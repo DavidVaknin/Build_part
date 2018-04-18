@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generated="20180417 16:55:39.063" generator="Robot 3.0.3 (Python 2.7.12 on linux2)">
-<suite source="/home/matt/PycharmProjects/robot3_test/test1.robot" id="s1" name="Test1">
+<robot generated="20180418 12:44:43.656" generator="Robot 3.0.3 (Python 2.7.12 on linux2)">
+<suite source="/home/matt/Documents/DuduV/Build_part/robot3_test/test1.robot" id="s1" name="Test1">
 <test id="s1-t1" name="My Test">
 <kw name="Log" library="BuiltIn">
 <doc>Logs the given message with the given level.</doc>
 <arguments>
 <arg>${MESSAGE}</arg>
 </arguments>
-<msg timestamp="20180417 16:55:39.094" level="INFO">Hello, world!</msg>
-<status status="PASS" endtime="20180417 16:55:39.094" starttime="20180417 16:55:39.094"></status>
+<msg timestamp="20180418 12:44:43.691" level="INFO">Hello, world!</msg>
+<status status="PASS" endtime="20180418 12:44:43.691" starttime="20180418 12:44:43.691"></status>
 </kw>
 <kw name="My Keyword">
 <arguments>
@@ -19,13 +19,13 @@
 <arguments>
 <arg>${path}</arg>
 </arguments>
-<msg timestamp="20180417 16:55:39.095" html="yes" level="INFO">Directory '&lt;a href="file:///tmp"&gt;/tmp&lt;/a&gt;' exists.</msg>
-<status status="PASS" endtime="20180417 16:55:39.095" starttime="20180417 16:55:39.095"></status>
+<msg timestamp="20180418 12:44:43.693" html="yes" level="INFO">Directory '&lt;a href="file:///tmp"&gt;/tmp&lt;/a&gt;' exists.</msg>
+<status status="PASS" endtime="20180418 12:44:43.693" starttime="20180418 12:44:43.692"></status>
 </kw>
-<status status="PASS" endtime="20180417 16:55:39.095" starttime="20180417 16:55:39.094"></status>
+<status status="PASS" endtime="20180418 12:44:43.693" starttime="20180418 12:44:43.692"></status>
 </kw>
 <doc>Example test</doc>
-<status status="PASS" endtime="20180417 16:55:39.095" critical="yes" starttime="20180417 16:55:39.093"></status>
+<status status="PASS" endtime="20180418 12:44:43.693" critical="yes" starttime="20180418 12:44:43.690"></status>
 </test>
 <test id="s1-t2" name="Another Test">
 <kw name="Should Be Equal" library="BuiltIn">
@@ -34,11 +34,11 @@
 <arg>${MESSAGE}</arg>
 <arg>Hello, world!</arg>
 </arguments>
-<status status="PASS" endtime="20180417 16:55:39.097" starttime="20180417 16:55:39.096"></status>
+<status status="PASS" endtime="20180418 12:44:43.695" starttime="20180418 12:44:43.694"></status>
 </kw>
-<status status="PASS" endtime="20180417 16:55:39.097" critical="yes" starttime="20180417 16:55:39.096"></status>
+<status status="PASS" endtime="20180418 12:44:43.695" critical="yes" starttime="20180418 12:44:43.694"></status>
 </test>
-<status status="PASS" endtime="20180417 16:55:39.097" starttime="20180417 16:55:39.064"></status>
+<status status="PASS" endtime="20180418 12:44:43.696" starttime="20180418 12:44:43.658"></status>
 </suite>
 <statistics>
 <total>
