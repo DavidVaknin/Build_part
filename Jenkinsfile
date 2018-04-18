@@ -103,16 +103,17 @@ pipeline {
                             /*-------Robot FrameWork------*/
                             
                         runCommand(params.RobotTestDirectory)
-                         try{
-                         step([$class: 'RobotPublisher',
-                            outputPath : ${workspace},
-                            outputFileName : "output.xml",
-                            reportFileName: 'report.html',
-                            logFileName: 'log.html',
-                            disableArchiveOutput : false,
-                            passThreshold : 100,
-                            unstableThreshold: 95.0
-                        ])
+                        
+                        try{
+                            step([$class: 'RobotPublisher',
+                                outputPath : ${workspace},
+                                outputFileName : "output.xml",
+                                reportFileName: 'report.html',
+                                logFileName: 'log.html',
+                                disableArchiveOutput : false,
+                                passThreshold : 100,
+                                unstableThreshold: 95.0
+                            ])
                         }catch(any){
                             echo 'Something failed in Robot publisher'
                             throw
