@@ -113,7 +113,10 @@ pipeline {
                             passThreshold : 100,
                             unstableThreshold: 95.0
                         ])
-                        }catch(any)
+                        }catch(any){
+                            echo 'Something failed in Robot publisher'
+                            throw
+                        }
  
                         /* ...HTML report... */
 
