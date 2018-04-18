@@ -17,7 +17,7 @@ pipeline {
     }  
     environment {
         // 'This value is exported to all commands in this stage'
-        ROBOTDIR =params.RobotTestDirectory
+        ROBOTDIR = '/home/matt/Documents/DuduV/Build_part/robot3_test/test1.robot'
         
       } 
     
