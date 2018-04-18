@@ -56,7 +56,6 @@ pipeline {
 
 
                         // Clean workspace before build
-                        CleanBeforeCheckout()
                         cleanWs()
                         // checkout sources
                         checkout([$class: 'GitSCM',
