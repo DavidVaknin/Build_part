@@ -25,7 +25,6 @@ pipeline {
                 script{
                     if(params.Analysis_test){
                     runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
-                    runCommand('ls -l')
                     // Cppcheck Dosnt Support for now
                     //   junit 'result.xml' 
                     } else echo "Analysis test step skipped"
@@ -55,6 +54,10 @@ pipeline {
                          //   fi
                          //   '''
 
+
+                        // Clean workspace before build
+                        CleanBeforeCheckout()
+                        cleanWs()
                         // checkout sources
                         checkout([$class: 'GitSCM',
                             userRemoteConfigs: [[url: params.RepositoryUrl]],
