@@ -96,8 +96,7 @@ pipeline {
                             /*-------Robot FrameWork------*/
 
                         //runCommand("pybot ../Build_part/robot3_test/test1.robot")
-                        step([
-                           $class : 'RobotPublisher',
+                        step([$class: 'RobotPublisher',
                             outputPath : '.',
                             outputFileName : "output.xml",
                             reportFileName: 'report.html',
