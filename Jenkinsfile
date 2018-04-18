@@ -92,10 +92,10 @@ pipeline {
                         
                         //sh './testfoo --gtest_output=xml'
                      
-                        runCommand('ls ../')
+                        runCommand('ls ../Build\ part')
                             /*-------Robot FrameWork------*/
 
-                        runCommand("pybot ../build_part/robot3_test/test1.robot")
+                        runCommand("pybot ../Build\ part/robot3_test/test1.robot")
                         //step([
                         //   $class : 'RobotPublisher',
                         // outputPath : params.CheckoutDirectory,
