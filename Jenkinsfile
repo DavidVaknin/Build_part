@@ -8,6 +8,7 @@ pipeline {
         string(defaultValue: '', description: 'The tag for the build-slave on which the project is build.', name: 'BuildSlaveTag')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
         string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
+        string(defaultValue: '/home/matt/Documents/DuduV/Build_part/robot3_test/test1.robot', description: 'Directory to robot test ', name: 'RobotTestDirectory')
         choice(name: 'BuildType', choices:"Debug\nRelease", description: "Select build type")       
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Analysis_test')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Build')
@@ -96,10 +97,10 @@ pipeline {
 
                             /*-------Robot FrameWork------*/
 
-                        runCommand("pybot /home/matt/Documents/DuduV/Build_part/robot3_test/test1.robot")
+                        runCommand("pybot " + params.RobotTestDirectory)
 
                          step([$class: 'RobotPublisher',
-                            outputPath : params.CheckoutDirectory/Robot_results,
+                            outputPath : params.CheckoutDirectory,
                             outputFileName : "output.xml",
                             reportFileName: 'report.html',
                             logFileName: 'log.html',
