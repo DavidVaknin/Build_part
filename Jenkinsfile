@@ -93,18 +93,20 @@ pipeline {
                         //sh './testfoo --gtest_output=xml'
                      
                         runCommand('ls ../Build_part')
+
                             /*-------Robot FrameWork------*/
 
                         runCommand("pybot /robot3_test/test1.robot")
-                         /*step([$class: 'RobotPublisher',
+
+                         step([$class: 'RobotPublisher',
                             outputPath : params.CheckoutDirectory/Robot_results,
-                            outputFileName : "*.xml",
+                            outputFileName : "output.xml",
                             reportFileName: 'report.html',
                             logFileName: 'log.html',
                             disableArchiveOutput : false,
                             passThreshold : 100,
                             unstableThreshold: 95.0
-                        ])*/
+                        ])
  
                         /* ...HTML report... */
 
