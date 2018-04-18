@@ -56,7 +56,7 @@ pipeline {
 
 
                         // Clean workspace before build
-                        cleanWs()
+                        //cleanWs()
                         // checkout sources
                         checkout([$class: 'GitSCM',
                             userRemoteConfigs: [[url: params.RepositoryUrl]],
@@ -96,9 +96,9 @@ pipeline {
                             /*-------Robot FrameWork------*/
 
                         //runCommand("pybot ../Build_part/robot3_test/test1.robot")
-                         step([
+                        step([
                            $class : 'RobotPublisher',
-                         outputPath : params.CheckoutDirectory/robot3_test,
+                            outputPath : '.',
                             outputFileName : "output.xml",
                             reportFileName: 'report.html',
                             disableArchiveOutput : false,
