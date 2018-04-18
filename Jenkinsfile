@@ -98,7 +98,7 @@ pipeline {
                         //runCommand("pybot ../Build_part/robot3_test/test1.robot")
                         step([$class: 'RobotPublisher',
                             outputPath : ${workspace}/robot3_test,
-                            outputFileName : "output.xml",
+                            outputFileName : "*.xml",
                             reportFileName: 'report.html',
                             logFileName: 'log.html',
                             disableArchiveOutput : false,
