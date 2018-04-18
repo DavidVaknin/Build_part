@@ -95,17 +95,17 @@ pipeline {
                         runCommand('ls ../Build_part')
                             /*-------Robot FrameWork------*/
 
-                        runCommand("pybot ../Build_part/robot3_test/test1.robot")
-                        //step([
-                        //   $class : 'RobotPublisher',
-                        // outputPath : params.CheckoutDirectory,
-                            //outputFileName : "output.xml",
-                            //reportFileName: 'report.html',
-                            //disableArchiveOutput : false,
-                            //logFileName: 'log.html',
-                            //passThreshold : 100,
-                            //unstableThreshold: 95.0
-                        //])
+                        //runCommand("pybot ../Build_part/robot3_test/test1.robot")
+                         step([
+                           $class : 'RobotPublisher',
+                         outputPath : params.CheckoutDirectory,
+                            outputFileName : "output.xml",
+                            reportFileName: 'report.html',
+                            disableArchiveOutput : false,
+                            logFileName: 'log.html',
+                            passThreshold : 100,
+                            unstableThreshold: 95.0
+                        ])
 
                         /* ...HTML report... */
 
