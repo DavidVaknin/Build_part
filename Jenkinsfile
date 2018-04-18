@@ -17,7 +17,8 @@ pipeline {
     }  
     environment {
         // 'This value is exported to all commands in this stage'
-        params.RobotTestDirectory = "${env.ROBOTDIR}"
+        ROBOTDIR =params.RobotTestDirectory
+        
       } 
     
     stages  
