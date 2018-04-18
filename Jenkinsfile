@@ -96,7 +96,7 @@ pipeline {
 
                             /*-------Robot FrameWork------*/
 
-                        runCommand("pybot /robot3_test/test1.robot")
+                        runCommand("pybot /home/matt/Documents/DuduV/Build_part/robot3_test/test1.robot")
 
                          step([$class: 'RobotPublisher',
                             outputPath : params.CheckoutDirectory/Robot_results,
@@ -115,7 +115,7 @@ pipeline {
                         //archiveArtifacts "xml"
                         
 
-                        // publish html
+                        /*-----publish html-----*/
                         // snippet generator doesn't include "target:"
                         publishHTML (target: [
                             allowMissing: false,
@@ -181,4 +181,3 @@ def runCommand( command )
         bat command
     }
 }
-    
