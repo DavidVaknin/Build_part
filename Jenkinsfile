@@ -174,6 +174,7 @@ def printJobParameter()
 RepositoryUrl = ${params.RepositoryUrl}
 CheckoutDirectory = ${params.CheckoutDirectory}
 BuildSlaveTag = ${params.BuildSlaveTag}
+robotrun = ${ROBOTRUN}
 
 -------------------------------
 """
