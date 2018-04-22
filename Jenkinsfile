@@ -103,7 +103,7 @@ pipeline {
 
                             /*-------Robot FrameWork------*/
                             
-                        runCommand( params.RobotTestDirectory)
+                        runCommand( ${ROBOTRUN} params.RobotTestDirectory)
 
                         try{
                             step([$class: 'RobotPublisher',
