@@ -15,11 +15,12 @@ pipeline {
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Report')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
     }  
-    environment {
+    *** Variables ***
+
         // 'This value is exported to all commands in this stage'
-        ROBOTRUN = 'pybot'
+        ${ROBOTRUN}      pybot
         
-      } 
+    
     
     stages  
     {  
@@ -106,9 +107,9 @@ pipeline {
 
                         try{
                             step([$class : 'RobotPublisher',
-                                outputFileName : 'output.xml',
-                                 reportFileName : 'report.html',
-                                 logFileName : 'log.html',
+                                outputFileName : "*.xml",
+                                //reportFileName : 'report.html',
+                                //logFileName : 'log.html',
                                 disableArchiveOutput : false,
                                 passThreshold : 100,
                                 unstableThreshold: 95.0
