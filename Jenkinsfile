@@ -108,6 +108,7 @@ pipeline {
                         try{
                             step([$class : 'RobotPublisher',
                                 outputFileName : 'output.xml',
+                                outputPath : '/robot3_test',
                                 //reportFileName : 'report.html',
                                 //logFileName : 'log.html',
                                 disableArchiveOutput : false,
