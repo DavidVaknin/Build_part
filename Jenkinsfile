@@ -14,7 +14,9 @@ pipeline {
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Build')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Report')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
-    }  
+    } 
+    
+    /**********environment variabels******/ 
     environment {
         ROBOTRUN = "pybot"
     }
@@ -39,10 +41,8 @@ pipeline {
         }
         stage('Build and Test') 
         {
-
             steps
-            {   
-                
+            {    
                 node(params.BuildSlaveTag)
                 {
                     // acquiering an extra workspace seems to be necessary to prevent interaction between
@@ -61,8 +61,6 @@ pipeline {
                          //   '''
 
 
-                        // Clean workspace before build
-                        //cleanWs()
                         // checkout sources
                         checkout([$class: 'GitSCM',
                             userRemoteConfigs: [[url: params.RepositoryUrl]],
@@ -88,13 +86,13 @@ pipeline {
         }
            
         stage('Report') 
-            {
+        {    
             steps 
             {
                 script{
                     if(params.Report){
+
                         runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')
-                        
                         
                         //sh './testfoo --gtest_output=xml'
                      
