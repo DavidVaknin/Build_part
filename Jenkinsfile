@@ -16,7 +16,7 @@ pipeline {
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
     }  
     environment {
-        ROBOTRUN = "pybot   "
+        ROBOTRUN = "pybot "
     }
 
     
@@ -102,7 +102,7 @@ pipeline {
 
                             /*-------Robot FrameWork------*/
                             
-                        runCommand( "pybot  ${params.RobotTestDirectory}")
+                        runCommand( "${ROBOTRUN} ${params.RobotTestDirectory}")
 
                         try{
                             step([$class: 'RobotPublisher',
