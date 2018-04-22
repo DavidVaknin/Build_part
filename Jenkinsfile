@@ -15,11 +15,11 @@ pipeline {
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Report')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
     }  
-    *** Variables ***
+    enviorment{
 
         // 'This value is exported to all commands in this stage'
-        ${ROBOTRUN}      pybot
-        
+        ROBOTRUN = 'pybot'
+    }    
     
     
     stages  
