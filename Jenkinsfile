@@ -15,7 +15,7 @@ pipeline {
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Report')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
     }  
-    enviorment{
+    environment{
 
         // 'This value is exported to all commands in this stage'
         ROBOTRUN = 'pybot'
