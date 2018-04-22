@@ -16,7 +16,7 @@ pipeline {
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
     }  
     environment {
-        ROBOTRUN = "pybot "
+        ROBOTRUN = "pybot"
     }
 
     
