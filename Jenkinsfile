@@ -15,11 +15,10 @@ pipeline {
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Report')
         booleanParam(defaultValue: true, description: 'Unchek for skip on this step', name: 'Send_mail')
     }  
-    environment{
+    environment {
+        ROBOTRUN = "pybot   "
+    }
 
-        // 'This value is exported to all commands in this stage'
-        ROBOTRUN = 'pybot'
-    }    
     
     
     stages  
@@ -103,7 +102,7 @@ pipeline {
 
                             /*-------Robot FrameWork------*/
                             
-                        runCommand( 'pybot ' + params.RobotTestDirectory)
+                        runCommand( "pybot  ${params.RobotTestDirectory}")
 
                         try{
                             step([$class: 'RobotPublisher',
@@ -175,6 +174,7 @@ def printJobParameter()
 RepositoryUrl = ${params.RepositoryUrl}
 CheckoutDirectory = ${params.CheckoutDirectory}
 BuildSlaveTag = ${params.BuildSlaveTag}
+
 -------------------------------
 """
     
