@@ -103,12 +103,12 @@ pipeline {
 
                             /*-------Robot FrameWork------*/
                             
-                        runCommand( params.RobotTestDirectory)
+                        //runCommand( params.RobotTestDirectory)
 
                         try{
                             step([$class : 'RobotPublisher',
                                 outputFileName : 'output.xml',
-                                outputPath : '/robot3_test',
+                                //outputPath : '/robot3_test',
                                 //reportFileName : 'report.html',
                                 //logFileName : 'log.html',
                                 disableArchiveOutput : false,
