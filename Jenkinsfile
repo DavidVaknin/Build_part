@@ -106,13 +106,12 @@ pipeline {
 
                         try{
                             step([$class : 'RobotPublisher',
-                                outputFileName : "output.xml",
+                                outputFileName : 'output.xml',
                                  reportFileName : 'report.html',
                                  logFileName : 'log.html',
                                 disableArchiveOutput : false,
                                 passThreshold : 100,
-                                unstableThreshold: 95.0,
-                                otherFiles : "*.png"
+                                unstableThreshold: 95.0
                                 ])
                         }catch(exc){
                             echo 'Something failed in Robot publisher'
