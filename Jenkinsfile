@@ -16,17 +16,16 @@ pipeline {
         stage('Static Code Analysis') {   
             steps { 
                 script {
-
                     runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
 
-                    runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir= --source-dir=')                   
-                                      
+                    runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=test --source-dir=')                   
+                                 
 
                     publishHTML (target: [
                         allowMissing: false,    
                         alwaysLinkToLastBuild: false,
                         keepAll: true,
-                        reportDir: '',
+                        reportDir: 'test',
                         reportFiles: 'index.html',
                         reportName: "Cppcheck Report"
                         ])                    
