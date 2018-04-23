@@ -7,9 +7,9 @@ pipeline {
         choice(name: 'BuildType', choices:"Debug\nRelease", description: "Select build type")       
     }
     
-    node ('master') {
-        stages {
-            stage('Static Code Analysis') {   
+    stages {
+        stage('Static Code Analysis') {   
+            node ('master') {
                 steps { 
                     script {
                         runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
@@ -26,8 +26,10 @@ pipeline {
                     }
                 }
             }
+        }
 
-            stage('Build') {
+        stage('Build') {
+            node ('master') {
                 steps {    
 
                     // debug info
@@ -49,63 +51,65 @@ pipeline {
                     }
                 }
             }
-            
-            // stage('Report') 
-            // {    
-            //     steps 
-            //     {
-            //         script{
-            //             if(params.Report){
+        }
+        
+        // stage('Report') 
+        // {    
+        //     steps 
+        //     {
+        //         script{
+        //             if(params.Report){
 
-            //                 runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')
-                            
-            //                 // try{
-            //                 //     step([$class: 'RobotPublisher',
-            //                 //         disableArchiveOutput: false,
-            //                 //         logFileName: 'log.html',
-            //                 //         otherFiles: '',
-            //                 //         outputFileName: 'output.xml',
-            //                 //         outputPath: '.',
-            //                 //         passThreshold: 100,
-            //                 //         reportFileName: 'report.html',
-            //                 //         unstableThreshold: 0]);
-            //                 // }catch(exc){
-            //                 //     echo 'Something failed in Robot publisher'
-            //                 // }
-    
-            //                 /* ...HTML report... */
+        //                 runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')
+                        
+        //                 // try{
+        //                 //     step([$class: 'RobotPublisher',
+        //                 //         disableArchiveOutput: false,
+        //                 //         logFileName: 'log.html',
+        //                 //         otherFiles: '',
+        //                 //         outputFileName: 'output.xml',
+        //                 //         outputPath: '.',
+        //                 //         passThreshold: 100,
+        //                 //         reportFileName: 'report.html',
+        //                 //         unstableThreshold: 0]);
+        //                 // }catch(exc){
+        //                 //     echo 'Something failed in Robot publisher'
+        //                 // }
 
-            //                 // Archive the built artifacts
-            //                 archive (includes: 'pkg/*.gem')
-            //                 //archiveArtifacts "xml"
-                            
+        //                 /* ...HTML report... */
 
-            //                 /*-----publish html-----*/
-            //                 // snippet generator doesn't include "target:"
-            //                 publishHTML (target: [
-            //                     allowMissing: false,    
-            //                     alwaysLinkToLastBuild: false,
-            //                     keepAll: true,
-            //                     reportDir: 'cppcheck_reports',
-            //                     reportFiles: 'index.html',
-            //                     reportName: "Cppcheck Report"
-            //                     ])
+        //                 // Archive the built artifacts
+        //                 archive (includes: 'pkg/*.gem')
+        //                 //archiveArtifacts "xml"
+                        
 
-            //             }else echo "Report step skipped"   
-            //         }
-            //     }
-            //     post { 
-            //         failure { 
-            //             step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - Report ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
-            //         }
-            //     }
-            // }
-            
-            // stage('Functional Testing') {
+        //                 /*-----publish html-----*/
+        //                 // snippet generator doesn't include "target:"
+        //                 publishHTML (target: [
+        //                     allowMissing: false,    
+        //                     alwaysLinkToLastBuild: false,
+        //                     keepAll: true,
+        //                     reportDir: 'cppcheck_reports',
+        //                     reportFiles: 'index.html',
+        //                     reportName: "Cppcheck Report"
+        //                     ])
 
-            // }
+        //             }else echo "Report step skipped"   
+        //         }
+        //     }
+        //     post { 
+        //         failure { 
+        //             step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - Report ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
+        //         }
+        //     }
+        // }
+        
+        // stage('Functional Testing') {
 
-            stage('Send Email') {
+        // }
+
+        stage('Send Email') {
+            node ('master') {
                 steps {
                     script {
 
@@ -118,7 +122,7 @@ pipeline {
                     }
                 }
             }
-        } // master
+        }
     }
 } 
 
