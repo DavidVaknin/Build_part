@@ -18,12 +18,13 @@ pipeline {
                 script {
                     runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
 
-                    runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')                   
+                    //runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')                   
+                    runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice  --source-dir=')                   
                     publishHTML (target: [
                         allowMissing: false,    
                         alwaysLinkToLastBuild: false,
                         keepAll: true,
-                        reportDir: 'cppcheck_reports',
+                       // reportDir: 'cppcheck_reports',
                         reportFiles: 'index.html',
                         reportName: "Cppcheck Report"
                         ])                    
@@ -105,9 +106,29 @@ pipeline {
         //     }
         // }
         
-        // stage('Functional Testing') {
+        stage('Functional Testing') {
+            steps {
+                node('automation') {
 
-        // }
+                    checkout scm 
+                    
+                     //try{
+                 //     step([$class: 'RobotPublisher',
+                 //         disableArchiveOutput: false,
+                 //         logFileName: 'log.html',
+                 //         otherFiles: '',
+                 //         outputFileName: 'output.xml',
+                 //         outputPath: '.',
+                 //         passThreshold: 100,
+                 //         reportFileName: 'report.html',
+                 //         unstableThreshold: 0]);
+                 // }catch(exc){
+                 //     echo 'Something failed in Robot publisher'
+                 // }
+
+                }
+            }
+        }
 
         stage('Send Email') {
             steps {
