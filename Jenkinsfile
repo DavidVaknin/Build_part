@@ -25,7 +25,7 @@ pipeline {
     
     stages  
     {  
-          stage('Analysis test')
+          stage('Static Code Analysis')
         {   
            
             steps 
@@ -39,7 +39,7 @@ pipeline {
                 }
             }
         }
-        stage('Build and Test') 
+        stage('Build')
         {
             steps
             {    
@@ -71,7 +71,11 @@ pipeline {
                         script{
                             if(params.Build){
                                 // run cmake generate and build
-                                cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]    
+                                cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
+
+                                runCommand('./build/test/testfoo/testfoo --gtest_output="xml:testresults.xml"')
+                                junit 'build/test/**/testresults.xml'
+
                              }else echo "build step skipped"
                         }        
                     }
