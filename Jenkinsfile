@@ -108,7 +108,7 @@ pipeline {
             steps {
                 node('automation') {
 
-                    checkout scm 
+                    //checkout scm 
                     
                      //try{
                  //     step([$class: 'RobotPublisher',
