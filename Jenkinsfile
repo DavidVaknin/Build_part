@@ -18,13 +18,14 @@ pipeline {
                 script {
                     runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
 
-                    //runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')                   
-                    runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice  --source-dir=')                   
+                   // runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')                   
+                    runCommand("cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice  --source-dir=")                   
+
                     publishHTML (target: [
                         allowMissing: false,    
                         alwaysLinkToLastBuild: false,
                         keepAll: true,
-                       // reportDir: 'cppcheck_reports',
+                        reportDir: '',
                         reportFiles: 'index.html',
                         reportName: "Cppcheck Report"
                         ])                    
