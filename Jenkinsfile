@@ -2,7 +2,6 @@ pipeline {
     agent any 
    
     parameters {
-        string(defaultValue: 'git@github.com:DavidVaknin/Build_part.git', description: 'The url of the git repository the contains the projects CMakeLists.txt file in the root directory.  ', name: 'RepositoryUrl')
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
         string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
         choice(name: 'BuildType', choices:"Debug\nRelease", description: "Select build type")       
