@@ -35,7 +35,7 @@ pipeline {
             steps {    
 
                 // debug info
-                printJobParameter()
+                // printJobParameter()
 
                 script {
 
