@@ -25,7 +25,7 @@ pipeline {
                         allowMissing: false,    
                         alwaysLinkToLastBuild: false,
                         keepAll: true,
-                        reportDir: '',
+                        reportDir: '/build',
                         reportFiles: 'index.html',
                         reportName: "Cppcheck Report"
                         ])                    
@@ -35,9 +35,6 @@ pipeline {
 
         stage('Build') {
             steps {    
-
-                // debug info
-                // printJobParameter()
 
                 script {
 
@@ -147,20 +144,6 @@ pipeline {
     }
 } 
 
-def printJobParameter()
-{
-    def introduction = """
------ Build CMake project -----
-RepositoryUrl = ${params.RepositoryUrl}
-CheckoutDirectory = ${params.CheckoutDirectory}
-BuildSlaveTag = ${params.BuildSlaveTag}
-robotrun = ${ROBOTRUN} ${params.RobotTestDirectory}
-
--------------------------------
-"""
-    
-    echo introduction
-}
 
 def runCommand( command )
 {
