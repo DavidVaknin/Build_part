@@ -43,7 +43,7 @@ pipeline {
                     cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
 
                     runCommand('./build/test/testfoo/testfoo --gtest_output="xml:testresults.xml"')
-                    junit 'build/test/**/testresults.xml'
+                    junit 'testresults.xml'
                 }        
             }                       
             
