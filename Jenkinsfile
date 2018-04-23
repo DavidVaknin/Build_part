@@ -1,6 +1,11 @@
 pipeline { 
-    agent any 
-   
+
+    agent {
+        node {
+            label 'build'
+        }
+    }
+
     parameters {
         string(defaultValue: 'master', description: 'Relevant branch to test.', name: 'Branch')
         string(defaultValue: 'david.vaknin@devalore.com', description: 'write mailRecipients.', name: 'MailRecipients')
@@ -9,46 +14,42 @@ pipeline {
     
     stages {
         stage('Static Code Analysis') {   
-            node ('master') {
-                steps { 
-                    script {
-                        runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
+            steps { 
+                script {
+                    runCommand('cppcheck --enable=all --inconclusive --xml-version=2 --force --library=windows,posix,gnu libbar/ 2> Cppcheck_result.xml')
 
-                        runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')                   
-                        publishHTML (target: [
-                            allowMissing: false,    
-                            alwaysLinkToLastBuild: false,
-                            keepAll: true,
-                            reportDir: 'cppcheck_reports',
-                            reportFiles: 'index.html',
-                            reportName: "Cppcheck Report"
-                            ])                    
-                    }
+                    runCommand('cppcheck-htmlreport  --file=Cppcheck_result.xml --title=LibreOffice --report-dir=cppcheck_reports --source-dir=')                   
+                    publishHTML (target: [
+                        allowMissing: false,    
+                        alwaysLinkToLastBuild: false,
+                        keepAll: true,
+                        reportDir: 'cppcheck_reports',
+                        reportFiles: 'index.html',
+                        reportName: "Cppcheck Report"
+                        ])                    
                 }
             }
         }
 
         stage('Build') {
-            node ('master') {
-                steps {    
+            steps {    
 
-                    // debug info
-                    printJobParameter()
+                // debug info
+                printJobParameter()
 
-                    script {
+                script {
 
-                        // run cmake generate and build
-                        cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
+                    // run cmake generate and build
+                    cmakeBuild buildDir: 'build', buildType: params.BuildType , installation: 'InSearchPath', steps: [[args: '--target install', withCmake: true]]
 
-                        runCommand('./build/test/testfoo/testfoo --gtest_output="xml:testresults.xml"')
-                        junit 'build/test/**/testresults.xml'
-                    }        
-                }                       
-                
-                post { 
-                    failure { 
-                        step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
-                    }
+                    runCommand('./build/test/testfoo/testfoo --gtest_output="xml:testresults.xml"')
+                    junit 'build/test/**/testresults.xml'
+                }        
+            }                       
+            
+            post { 
+                failure { 
+                    step([$class: 'Mailer', notifyEveryUnstableBuild: true,subject: "${currentBuild.currentResult}: ${env.JOB_NAME} - build ${currentBuild.number} = 'FAILURE'", recipients: params.MailRecipients, sendToIndividuals: true])
                 }
             }
         }
@@ -109,17 +110,15 @@ pipeline {
         // }
 
         stage('Send Email') {
-            node ('master') {
-                steps {
-                    script {
+            steps {
+                script {
 
-                        emailext (body: '''${SCRIPT, template="buildlog.template"}''',
-                        mimeType: 'text/html',
-                        subject: "[Jenkins] Buildlog",
-                        to: params.MailRecipients,
-                        replyTo: params.MailRecipients,
-                        recipientProviders: [[$class: 'CulpritsRecipientProvider']])
-                    }
+                    emailext (body: '''${SCRIPT, template="buildlog.template"}''',
+                    mimeType: 'text/html',
+                    subject: "[Jenkins] Buildlog",
+                    to: params.MailRecipients,
+                    replyTo: params.MailRecipients,
+                    recipientProviders: [[$class: 'CulpritsRecipientProvider']])
                 }
             }
         }
